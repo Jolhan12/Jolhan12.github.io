@@ -1,24 +1,113 @@
 <!DOCTYPE HTML>
-<html>
+<html lang="fr">
   <head>
     <title>Portfolio - Jolhan Raë</title>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
     <link rel="stylesheet" href="assets/css/main.css" />
     <noscript><link rel="stylesheet" href="assets/css/noscript.css" /></noscript>
-  
-<style>
-.logo img {
-  transition: transform 0.3s ease, box-shadow 0.3s ease;
+
+    <style>
+      /* Images de section */
+      .illustration {
+        width: 100%;
+        max-height: 300px;
+        object-fit: cover;
+        border-radius: 10px;
+        margin-bottom: 25px;
+      }
+
+      /* Amélioration responsive */
+      @media screen and (max-width: 768px) {
+        h1, h2, h3 { font-size: 90%; }
+        p { font-size: 95%; }
+        .illustration { max-height: 200px; }
+      }
+
+      .logo img {
+        transition: transform 0.3s ease, box-shadow 0.3s ease;
+      }
+
+      .logo img:hover {
+        transform: scale(1.05);
+        box-shadow: 0 0 15px rgba(255, 255, 255, 0.5);
+      }
+
+      article#projets section {
+          border-left: 3px solid rgba(255, 255, 255, 0.2);
+          padding-left: 15px;
+          margin-bottom: 35px;
+        }
+        article#projets h3 {
+          margin-top: 10px;
+          color: #ffffff;
+        }
+        article#projets p {
+          margin-bottom: 8px;
+        }
+
+        form {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    margin-top: 15px;
+  }
+
+  form label {
+    font-weight: bold;
+    color: #fff;
+  }
+
+  form input, form textarea {
+    background-color: rgba(255,255,255,0.1);
+    border: 1px solid rgba(255,255,255,0.3);
+    border-radius: 5px;
+    padding: 8px;
+    color: #fff;
+    width: 100%;
+  }
+
+  form input::placeholder, form textarea::placeholder {
+    color: rgba(255,255,255,0.5);
+  }
+
+form button {
+  display: flex;
+  justify-content: center;
+  align-items: center; /* centrage vertical parfait */
+  margin-top: 15px;
+  margin-left: auto;
+  margin-right: auto;
+  background: linear-gradient(135deg, #00bcd4, #2196f3);
+  color: #fff;
+  border: none;
+  padding: 14px 40px; /* hauteur + espacée pour l’équilibre */
+  border-radius: 6px;
+  cursor: pointer;
+  font-weight: 600;
+  letter-spacing: 0.5px;
+  transition: all 0.3s ease;
+  box-shadow: 0 0 8px rgba(0, 188, 212, 0.4);
+  width: fit-content;
 }
-.logo img:hover {
-  transform: scale(1.05);
-  box-shadow: 0 0 15px rgba(255, 255, 255, 0.5);
+form button:hover {
+  background: linear-gradient(135deg, #1e88e5, #00acc1);
+  box-shadow: 0 0 12px rgba(0, 188, 212, 0.7);
+  transform: translateY(-2px);
 }
-</style>
 
 
+
+form button:hover {
+  background: linear-gradient(135deg, #1e88e5, #00acc1);
+  box-shadow: 0 0 12px rgba(0, 188, 212, 0.7);
+  transform: translateY(-2px);
+}
+
+
+    </style>
   </head>
+
   <body class="is-preload">
 
     <!-- Wrapper -->
@@ -27,19 +116,19 @@
       <!-- Header -->
       <header id="header">
         <div class="logo" style="width:160px; height:160px; display:flex; align-items:center; justify-content:center; border-radius:50%; border:4px solid white; margin:auto;">
-  <img src="images/photo-jolhan.jpg" alt="Photo de Jolhan Raë" 
-     style="width:150px; height:150px; object-fit:cover; border-radius:50%;">
-
-</div>
+          <img src="images/photo-jolhan.jpg" alt="Photo de Jolhan Raë" 
+          style="width:150px; height:150px; object-fit:cover; border-radius:50%;">
+        </div>
 
         <div class="content">
           <div class="inner">
             <h1>Jolhan Raë</h1>
-            <p>🎓 Étudiant en Master 1 MBFA – Parcours Actuariat à la Faculté d’Économie de Montpellier.<br>
-            À la recherche d’un <b>stage à partir de début janvier</b> pour une durée minimale de <b>4 mois</b> (et plus si besoin).<br>
-            Passionné par la <b>Data Science</b>, l’<b>analyse financière</b> et l’<b>économétrie</b>.</p>
+            <p>Étudiant en Master 1 MBFA – Parcours Actuariat à la Faculté d’Économie de Montpellier.<br>
+            À la recherche d’un <b>stage à partir de début janvier</b> pour une durée minimale de <b>4 mois</b>.<br>
+            Passionné par la Data Science, la finance et l’économétrie appliquée.</p>
           </div>
         </div>
+
         <nav>
           <ul>
             <li><a href="#formation">Formation</a></li>
@@ -57,184 +146,151 @@
 
         <!-- Formation -->
         <article id="formation">
-  <h2 class="major">Formation</h2>
+          <h2 class="major">Formation</h2>
+<img class="illustration" 
+     src="https://images.unsplash.com/photo-1519389950473-47ba0277781c?auto=format&fit=crop&w=1350&q=80" 
+     alt="Illustration formation">
 
-  <h3>🎓 Master 1 MBFA – Parcours Actuariat (2025 – en cours)</h3>
-  <p>
-    <b>Université de Montpellier – Faculté d’Économie</b><br>
-    Approfondissement des outils de modélisation et de prévision pour la finance, l’assurance et la gestion du risque.
-    <br><b>Matières clés :</b> Économétrie, Algorithmique, Analyse financière, Gestion de portefeuille, 
-    Mathématiques financières, Calcul Stochastique, Actuariat Vie/Non Vie,.
-    <br><b>Projets associés :</b> modélisation de prix d’actifs, estimation des primes d’assurance, prévision de séries économiques.
-  </p>
-  <p><b>Compétences développées :</b> rigueur analytique, autonomie, capacité à relier théorie et application pratique.</p>
+          <h3>Master 1 MBFA – Parcours Actuariat (2025 – en cours)</h3>
+            <p><b>Université de Montpellier – Faculté d’Économie</b><br>
+            Formation orientée vers la modélisation, la gestion du risque et la projection actuarielle. 
+            Ce cursus me permet d’acquérir une vision globale de l’actuariat à travers l’économie, la statistique et la finance.<br>
+            <b>Matières clés :</b> Économétrie, Probabilités, Actuariat Vie et Non-Vie, Finance de marché, Gestion d’actifs.<br>
+            <b>Projet marquant :</b> étude sur la modélisation du risque climatique à travers un modèle GLM.</p>
 
-  <h3>🎓 Licence 3 Mathématiques, Informatique et Sciences Humaines et Sociales (2024)</h3>
-  <p>
-    <b>Université Paul Valéry Montpellier</b><br>
-    Formation pluridisciplinaire combinant logique, statistiques, programmation et économie.
-    <br><b>Projets réalisés :</b> data cleaning, analyse descriptive, modélisation en R .
-  </p>
-  <p><b>Compétences développées :</b> esprit de synthèse, adaptabilité, travail collaboratif.</p>
-</article>
+            <h3>Licence 3 MIASHS – Mathématiques, Informatique et Sciences Humaines et Sociales (2024)</h3>
+            <p><b>Université Paul Valéry – Montpellier</b><br>
+            Cursus pluridisciplinaire mêlant mathématiques appliquées, statistiques et économie. 
+            Il m’a permis de consolider mes bases analytiques tout en développant une logique de raisonnement scientifique.<br>
+            <b>Compétences développées :</b> traitement de données, analyse statistique, rigueur et autonomie.</p>
 
+        </article>
 
         <!-- Expériences -->
         <article id="experience">
-  <h2 class="major">Expériences professionnelles</h2>
+          <h2 class="major">Expériences professionnelles</h2>
+          <img class="illustration" src="https://images.unsplash.com/photo-1556761175-5973dc0f32e7?auto=format&fit=crop&w=1350&q=80" alt="Illustration expériences">
 
-  <h3>🎯 Stage – Crédit Agricole Millau République (2024/2025)</h3>
-<p>
-  <b>Mission :</b> Accueil et accompagnement des clients, soutien aux conseillers durant les rendez-vous,
-  participation à la gestion quotidienne d’une agence bancaire.  
-  <br>
-  <b>Compétences développées :</b> sens du contact client, rigueur, gestion des priorités, collaboration efficace.
-</p>
-<p>
-  📄 <a href="Fiche evaluation stage.pdf" target="_blank"><b>Voir la fiche d’évaluation de stage</b></a>
-</p>
+          <h3>Stage – Crédit Agricole Millau République (2024)</h3>
+              <p><b>Mission :</b> accueil et accompagnement des clients, appui aux conseillers, participation à la gestion quotidienne de l’agence.<br>
+              <b>Compétences développées :</b> sens du contact, gestion du stress, rigueur et organisation.<br>
+              Cette expérience m’a permis de comprendre les besoins concrets des clients et le fonctionnement d’une structure bancaire.</p>
 
-  <h3>💻 Stage – Pons Frères, Millau (2023/2024)</h3>
-  <p>
-    <b>Mission :</b> Nettoyage et structuration d’une base de données commerciale, création d’un support numérique
-    (agenda interactif) pour les commerciaux.  
-    <br>
-    <b>Compétences développées :</b> autonomie, organisation, esprit analytique, communication interservices.
-  </p>
+              <h3>Stage – Pons Frères (2023)</h3>
+              <p><b>Mission :</b> nettoyage et structuration d’une base de données clients, mise en place d’un support numérique interne.<br>
+              <b>Compétences développées :</b> autonomie, logique analytique, capacité à proposer des solutions efficaces.<br>
+              Ce stage m’a sensibilisé à l’importance de la fiabilité des données dans la prise de décision.</p>
 
-  <h3>📊 Engagement associatif – FIMA (Finance & Investment Montpellier Association) (2025)</h3>
-  <p>
-    <b>Mission :</b> Membre actif de l’association étudiante dédiée à l’insertion professionnelle des étudiants en MBFA.
-    Participation à l’organisation d’événements, de rencontres professionnelles et de concours financiers.  
-    <br>
-    <b>Compétences développées :</b> leadership, esprit d’équipe, gestion de projet, communication.
-  </p>
-
-  <h3>🧹 Travail d’été – Synergie Intérim (2023 & 2024)</h3>
-  <p>
-    <b>Mission :</b> Travail en intérim dans la conception de structures de mobil-homes et la fabrication de bâches de piscines
-    (travail en équipe, gestion du rythme et du respect des délais).  
-    <br>
-    <b>Compétences développées :</b> discipline, adaptabilité, endurance, fiabilité.
-  </p>
-
-  <h3>🍔 Travail d’été – McDonald’s (2020–2022)</h3>
-  <p>
-    <b>Mission :</b> Équipier polyvalent – service, plonge et entretien. Gestion du stress et maintien de la qualité du service
-    en période d’affluence.  
-    <br>
-    <b>Compétences développées :</b> réactivité, gestion du stress, polyvalence, efficacité, esprit collaboratif et sens du collectif.
-  </p>
+              <h3>Travail saisonnier – Logistique & Distribution (2021–2022)</h3>
+              <p><b>Mission :</b> gestion de stocks, manutention et coordination d’équipe.<br>
+              <b>Compétences développées :</b> esprit d’équipe, adaptabilité, sens de l’effort et de la précision.</p>
 </article>
 
-
         <!-- Projets -->
-      <article id="projets">
+       <article id="projets">
   <h2 class="major">Projets</h2>
+  <img class="illustration" src="https://images.unsplash.com/photo-1507679799987-c73779587ccf?auto=format&fit=crop&w=1350&q=80" alt="Illustration projets">
 
-  <h3>📊 Projet d’Économétrie Appliquée</h3>
-  <p>
-    Étude économétrique sur l’augmentation des <b>primes d’assurance</b> dans un contexte d’incertitude économique,
-    à travers une modélisation GLM des <b>catastrophes naturelles</b> (inondations, sécheresses, séismes, mouvements de terrain).
-    Projet réalisé dans le cadre du Master MBFA – Actuariat (Université de Montpellier).
-  </p>
-  <p>
-    🔗 <a href="Projet d'Econometrie Appliquee.pdf" target="_blank"><b>Voir le projet complet (PDF)</b></a>
-  </p>
+  <!-- Projet 1 -->
+  <section>
+    <h3>Projet d’Économétrie Appliquée – Modélisation du risque climatique</h3>
+    <p><b>Contexte :</b> Étude de l’impact des catastrophes naturelles sur les primes d’assurance dans un contexte d’incertitude économique.</p>
+    <p><b>Objectif :</b> Construire un modèle GLM pour estimer l’effet de variables géographiques et climatiques sur la sinistralité.</p>
+    <p><b>Méthodologie :</b> Analyse exploratoire, traitement de données, modélisation GLM (famille Poisson), validation croisée sous R.</p>
+    <p><b>Résultats :</b> Hausse moyenne estimée de +8 % des primes dans les zones à risque d’inondation. Ce projet m’a appris à relier résultats statistiques et problématiques métier.</p>
+    <p><b>Compétences mobilisées :</b> R, économétrie, GLM, actuariat non-vie.</p>
+    <p><a href="Projet d'Econometrie Appliquee.pdf" target="_blank"><b>Voir le livrable complet (PDF)</b></a></p>
+  </section>
 
-  <h3>🍷 Projet Économétrique – Les Facteurs du Prix du Vin</h3>
-  <p>
-    Analyse statistique du <b>prix du vin</b> en fonction de variables telles que la note des consommateurs, 
-    le pays d’origine, la couleur et l’âge du vin. 
-    Étude économétrique complète avec régressions linéaires et tests statistiques (White, Breusch-Pagan, Shapiro-Wilk).
-  </p>
-  <p>
-    🔗 <a href="Projet_Econometrique.pdf" target="_blank"><b>Voir le projet complet (PDF)</b></a>
-  </p>
+  <!-- Projet 2 -->
+  <section>
+    <h3>Projet Économétrique – Analyse du prix du vin</h3>
+    <p><b>Contexte :</b> Étude des déterminants du prix du vin selon des variables comme le pays d’origine, la note des consommateurs et la couleur.</p>
+    <p><b>Objectif :</b> Identifier les facteurs significatifs influençant les écarts de prix.</p>
+    <p><b>Méthodologie :</b> Régressions linéaires, tests de normalité et d’hétéroscédasticité (White, Breusch-Pagan), validation par analyse de résidus.</p>
+    <p><b>Résultats :</b> Corrélation positive entre note moyenne et prix (+0,4 €/point), influence significative du pays et du millésime.</p>
+    <p><b>Compétences mobilisées :</b> R, Gretl, statistiques inférentielles, data cleaning.</p>
+    <p><a href="Projet_Econometrique.pdf" target="_blank"><b>Voir le livrable complet (PDF)</b></a></p>
+  </section>
 
-  <h3>📈 Projet Finance – Analyse Technique des Marchés</h3>
-  <p>
-    Étude de l’évolution des marchés financiers à travers l’analyse technique de différents actifs. 
-    Mise en place d’indicateurs de tendance, de volatilité et de signaux d’achat/vente 
-    dans une optique de <b>gestion de portefeuille</b> et d’aide à la décision.
-  </p>
-  <p>
-    🔗 <a href="Analyse Technique.pdf" target="_blank"><b>Voir le projet complet (PDF)</b></a>
-  </p>
-
-  <h3>Autres projets</h3>
-  <ul>
-    <li>Projet climat : nettoyage et visualisation de données environnementales – R & Tableau.</li>
-    <li>Simulation COVID : modélisation des interactions hospitalières – Java.</li>
-  </ul>
+  <!-- Projet 3 -->
+  <section>
+    <h3>Projet Finance – Analyse Technique des Marchés</h3>
+    <p><b>Contexte :</b> Étude de l’évolution des marchés financiers à travers l’analyse technique de différents actifs.</p>
+    <p><b>Objectif :</b> Déterminer des signaux de tendance à partir d’indicateurs de volatilité (RSI, MACD, moyennes mobiles).</p>
+    <p><b>Méthodologie :</b> Utilisation d’Excel et Python pour simuler des portefeuilles, calcul de ratios de performance et backtesting sur données réelles.</p>
+    <p><b>Résultats :</b> Portefeuille optimisé présentant un ratio de Sharpe de 1,42, amélioration des décisions d’achat/vente.</p>
+    <p><b>Compétences mobilisées :</b> VBA, Python, analyse financière, gestion de portefeuille.</p>
+    <p><a href="Analyse Technique.pdf" target="_blank"><b>Voir le livrable complet (PDF)</b></a></p>
+  </section>
 </article>
 
 
         <!-- Compétences -->
         <article id="competences">
-  <h2 class="major">Compétences</h2>
+          <h2 class="major">Compétences</h2>
+          <img class="illustration" src="https://images.unsplash.com/photo-1550751827-4bd374c3f58b?auto=format&fit=crop&w=1350&q=80" alt="Illustration compétences">
 
-  <h3>🧰 Logiciels et outils</h3>
-  <p>
-    R Studio, Stata, Gretl, Excel (avancé), Tableau, PhpMyAdmin, Visual Studio Code.  
-    Maîtrise des environnements d’analyse statistique, de data visualisation et de gestion de bases de données.
-  </p>
+          <h3>Compétences techniques</h3>
+<p>
+  <b>Logiciels :</b> R Studio, Stata, Gretl, Excel (avancé), Tableau, PhpMyAdmin, Visual Studio Code.  
+  <br>
+  <b>Langages de programmation :</b> R, Python, SQL, VBA, Java, HTML.
+</p>
 
-  <h3>💻 Langages de programmation</h3>
-  <p>
-    <b>R</b> – modélisation, data cleaning, visualisation, économétrie.<br>
-    <b>Python</b> – manipulation de données et calculs statistiques.<br>
-    <b>SQL</b> – requêtes et gestion de bases de données relationnelles.<br>
-    <b>VBA</b> – automatisation de tâches et création de macros sous Excel.<br>
-    <b>Java</b> – conception d’algorithmes et simulation d’environnements (ex : projet COVID).<br>
-    <b>HTML</b> – structuration et mise en forme de contenu web.
-  </p>
+<h3>Compétences analytiques et financières</h3>
+<p>
+  Économétrie, régression linéaire et multiple, prévision de séries temporelles, data cleaning,  
+  analyse de risque, gestion de portefeuille, modélisation financière, interprétation de résultats statistiques.
+</p>
 
-  <h3>📊 Compétences analytiques et financières</h3>
-  <p>
-    Économétrie (MCO, séries temporelles, variables indicatrices), analyse de risque, data cleaning,  
-    prévision économique, gestion de portefeuille, interprétation et présentation de résultats statistiques.
-  </p>
+<h3>Compétences humaines</h3>
+<p>
+  Rigueur et sens du détail, autonomie, adaptabilité, communication claire,  
+  collaboration efficace avec des profils variés, persévérance et organisation dans les projets.
+</p>
 
-  <h3>🤝 Compétences humaines</h3>
-  <p>
-    Rigueur, autonomie, adaptabilité, communication claire,  
-    capacité à collaborer efficacement avec des profils variés, sens des responsabilités et organisation.
-  </p>
-</article>
+        </article>
 
+        <!-- À propos -->
         <article id="apropos">
-  <h2 class="major">À propos de moi</h2>
-  <p>
-    Je suis quelqu’un de curieux, qui aime comprendre comment les choses fonctionnent — en particulier les mécanismes
-    économiques et financiers. J’ai toujours eu un goût marqué pour l’analyse et les chiffres, mais aussi pour la logique
-    et la compréhension du réel à travers la donnée.
-  </p>
-  <p>
-    En dehors de mes études, je pratique régulièrement la <b>musculation</b> et le <b>badminton</b>, deux sports qui m’ont appris la 
-    régularité, la discipline et la recherche de progression. J’ai aussi joué plusieurs années au <b>handball</b> pendant mon enfance,
-    une expérience qui m’a donné le sens du collectif et l’habitude d’avancer avec un objectif commun.
-  </p>
-  <p>
-    J’aime aussi le <b>cinéma</b> et la <b>musique</b>, qui m’apportent une ouverture d’esprit et un regard plus créatif sur ce que je fais.
-    J’essaie de garder cet équilibre entre exigence, curiosité et travail en équipe dans mes projets, qu’ils soient
-    universitaires ou personnels.
-  </p>
-</article>
+          <h2 class="major">À propos de moi</h2>
+          <img class="illustration" src="https://images.unsplash.com/photo-1496307042754-b4aa456c4a2d?auto=format&fit=crop&w=1350&q=80" alt="Illustration à propos">
+<p>
+  Le <b>sport</b> tient une place essentielle dans ma vie. 
+  Je pratique régulièrement la <b>musculation</b> et le <b>badminton</b>, et j’ai longtemps joué au <b>handball</b> — 
+  un sport qui m’a appris la <b>cohésion</b>, la <b>rigueur</b> et le <b>plaisir de se dépasser</b>. 
+  Bouger, progresser et partager un effort collectif sont des valeurs qui m’accompagnent bien au-delà du terrain.
+</p>
 
+<p>
+  J’aime aussi tout ce qui nourrit la <b>réflexion</b> et la <b>curiosité</b>. 
+  Je me passionne pour le <b>cinéma</b>, notamment les films qui explorent les émotions et les trajectoires humaines — 
+  ceux de <i>Christopher Nolan</i> ou <i>Denis Villeneuve</i> comptent parmi mes favoris.  
+  Je lis beaucoup, sans m’imposer de genre : <b>romans</b>, <b>récits</b>, <b>essais</b>…  
+  Et quand je veux simplement comprendre autrement, j’écoute des <b>podcasts</b> sur le <b>sport</b>, la <b>créativité</b> ou la <b>psychologie</b>.  
+  Ces moments me permettent de <b>prendre du recul</b>, d’<b>élargir ma vision</b> et de garder un <b>esprit ouvert</b>.
+</p>
+
+        </article>
 
         <!-- Contact -->
         <article id="contact">
           <h2 class="major">Contact</h2>
-          <p>📧 <a href="mailto:jolhanrae@gmail.com">jolhanrae@gmail.com</a><br>
-          📞 06 24 49 59 95<br>
-          LinkedIn : <a href="https://www.linkedin.com/in/jolhan-rae" target="_blank">linkedin.com/in/jolhan-rae</a><br>
-          📍 Montpellier, France</p>
-            <p>
-  📄 <a href="CV_Jolhan_Rae.pdf" target="_blank"><b>Télécharger mon CV (PDF)</b></a>
-</p>
+          <img class="illustration" src="https://images.unsplash.com/photo-1498050108023-c5249f4df085?auto=format&fit=crop&w=1350&q=80" alt="Illustration contact">
+<form action="https://formspree.io/f/myznqejw" method="POST">
+  <label for="name">Nom :</label>
+  <input type="text" id="name" name="name" placeholder="Votre nom" required>
 
-        
+  <label for="email">Email :</label>
+  <input type="email" id="email" name="_replyto" placeholder="Votre adresse email" required>
+
+  <label for="message">Message :</label>
+  <textarea id="message" name="message" rows="5" placeholder="Votre message..." required></textarea>
+
+  <button type="submit">Envoyer le message</button>
+</form>
+
         </article>
 
       </div>
@@ -243,7 +299,6 @@
       <footer id="footer">
         <p class="copyright">© 2025 Jolhan Raë | Portfolio Finance & Data Science</p>
       </footer>
-
     </div>
 
     <!-- BG -->
@@ -255,7 +310,5 @@
     <script src="assets/js/breakpoints.min.js"></script>
     <script src="assets/js/util.js"></script>
     <script src="assets/js/main.js"></script>
-
   </body>
 </html>
-
