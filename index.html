@@ -211,38 +211,141 @@ form button:hover {
   <h2 class="major">Projets</h2>
   <img class="illustration" src="https://images.unsplash.com/photo-1507679799987-c73779587ccf?auto=format&fit=crop&w=1350&q=80" alt="Illustration projets">
 
+<!-- Projets -->
+<article id="projets">
+  <h2 class="major">Projets Data Science</h2>
+  <img class="illustration" src="https://images.unsplash.com/photo-1507679799987-c73779587ccf?auto=format&fit=crop&w=1350&q=80" alt="Illustration projets">
+
   <!-- Projet 1 -->
   <section>
-    <h3>Projet d’Économétrie Appliquée – Modélisation du risque climatique</h3>
-    <p><b>Contexte :</b> Étude de l’impact des catastrophes naturelles sur les primes d’assurance dans un contexte d’incertitude économique.</p>
-    <p><b>Objectif :</b> Construire un modèle GLM pour estimer l’effet de variables géographiques et climatiques sur la sinistralité.</p>
-    <p><b>Méthodologie :</b> Analyse exploratoire, traitement de données, modélisation GLM (famille Poisson), validation croisée sous R.</p>
-    <p><b>Résultats :</b> Hausse moyenne estimée de +8 % des primes dans les zones à risque d’inondation. Ce projet m’a appris à relier résultats statistiques et problématiques métier.</p>
-    <p><b>Compétences mobilisées :</b> R, économétrie, GLM, actuariat non-vie.</p>
-    <p><a href="Projet d'Econometrie Appliquee.pdf" target="_blank"><b>Voir le livrable complet (PDF)</b></a></p>
+    <h3>Prédiction du risque d’attrition client | R</h3>
+
+    <p>
+      <b>Contexte :</b> projet de classification supervisée appliqué à une base client bancaire.
+      L’objectif est d’identifier les profils présentant un risque d’attrition afin d’appuyer des actions de fidélisation et de mieux comprendre les facteurs associés au départ potentiel d’un client.
+    </p>
+
+    <p>
+      <b>Méthodologie :</b> préparation de la base, analyse des variables explicatives, sélection de variables, séparation apprentissage/test, entraînement de plusieurs modèles et comparaison des performances.
+    </p>
+
+    <p>
+      <b>Modèles et outils :</b> R, RStudio, Naïve Bayes, GLM Probit, LDA, sélection Stepwise, matrice de confusion, précision, rappel, F-measure.
+    </p>
+
+    <p>
+      <b>Apport du projet :</b> mise en relation entre résultats statistiques et interprétation métier afin de formuler des recommandations exploitables pour le suivi client.
+    </p>
+
+    <p>
+      <a href="Projet/Prédiction du risque d’attrition client - R.html" target="_blank"><b>Voir le livrable</b></a> ·
+      <a href="Projet/Prédiction du risque d’attrition client - R.Rmd" target="_blank"><b>Voir le code source</b></a>
+    </p>
   </section>
 
   <!-- Projet 2 -->
   <section>
-    <h3>Projet Économétrique – Analyse du prix du vin</h3>
-    <p><b>Contexte :</b> Étude des déterminants du prix du vin selon des variables comme le pays d’origine, la note des consommateurs et la couleur.</p>
-    <p><b>Objectif :</b> Identifier les facteurs significatifs influençant les écarts de prix.</p>
-    <p><b>Méthodologie :</b> Régressions linéaires, tests de normalité et d’hétéroscédasticité (White, Breusch-Pagan), validation par analyse de résidus.</p>
-    <p><b>Résultats :</b> Corrélation positive entre note moyenne et prix (+0,4 €/point), influence significative du pays et du millésime.</p>
-    <p><b>Compétences mobilisées :</b> R, Gretl, statistiques inférentielles, data cleaning.</p>
-    <p><a href="Projet_Econometrique.pdf" target="_blank"><b>Voir le livrable complet (PDF)</b></a></p>
+    <h3>Segmentation non supervisée de données assurantielles | Python</h3>
+
+    <p>
+      <b>Contexte :</b> projet d’apprentissage non supervisé appliqué à des données assurantielles.
+      L’objectif est d’identifier des groupes homogènes à partir des caractéristiques disponibles, sans variable cible prédéfinie.
+    </p>
+
+    <p>
+      <b>Méthodologie :</b> prétraitement des données, gestion des valeurs manquantes, encodage des variables catégorielles, standardisation des variables numériques, réduction de dimension et application de méthodes de clustering.
+    </p>
+
+    <p>
+      <b>Modèles et outils :</b> Python, Pandas, NumPy, Scikit-learn, Matplotlib, ACP/PCA, K-Means, classification hiérarchique ascendante, méthode du coude, score de silhouette.
+    </p>
+
+    <p>
+      <b>Apport du projet :</b> comparaison de méthodes de segmentation et interprétation des groupes obtenus dans une logique d’analyse de profils.
+    </p>
+
+    <p>
+      <a href="Projet/Segmentation non supervisée de données assurantielles - Python.html" target="_blank"><b>Voir le livrable</b></a> ·
+      <a href="Projet/Segmentation non supervisée de données assurantielles - Python.ipynb" target="_blank"><b>Voir le notebook</b></a>
+    </p>
   </section>
 
   <!-- Projet 3 -->
   <section>
-    <h3>Projet Finance – Analyse Technique des Marchés</h3>
-    <p><b>Contexte :</b> Étude de l’évolution des marchés financiers à travers l’analyse technique de différents actifs.</p>
-    <p><b>Objectif :</b> Déterminer des signaux de tendance à partir d’indicateurs de volatilité (RSI, MACD, moyennes mobiles).</p>
-    <p><b>Méthodologie :</b> Utilisation d’Excel et Python pour simuler des portefeuilles, calcul de ratios de performance et backtesting sur données réelles.</p>
-    <p><b>Résultats :</b> Portefeuille optimisé présentant un ratio de Sharpe de 1,42, amélioration des décisions d’achat/vente.</p>
-    <p><b>Compétences mobilisées :</b> VBA, Python, analyse financière, gestion de portefeuille.</p>
-    <p><a href="Analyse Technique.pdf" target="_blank"><b>Voir le livrable complet (PDF)</b></a></p>
+    <h3>Analyse de la vulnérabilité climatique des pays | Python</h3>
+
+    <p>
+      <b>Contexte :</b> projet de science des données portant sur l’exposition des pays au dérèglement climatique, à partir d’indicateurs internationaux de vulnérabilité, de population et d’émissions de CO₂.
+    </p>
+
+    <p>
+      <b>Méthodologie :</b> nettoyage des données, traitement des valeurs manquantes, normalisation des indicateurs, analyse comparative entre pays et production de visualisations.
+    </p>
+
+    <p>
+      <b>Outils :</b> Python, Pandas, Plotly, Matplotlib, normalisation min-max, visualisation de données, analyse comparative.
+    </p>
+
+    <p>
+      <b>Apport du projet :</b> transformation de données climatiques en visualisations interprétables afin de comparer les niveaux de vulnérabilité entre pays et de mettre en évidence certains contrastes environnementaux.
+    </p>
+
+    <p>
+      <a href="Projet/Analyse_vulnerabilite_climatique.pdf" target="_blank"><b>Voir le livrable</b></a> ·
+      <a href="Projet/Analyse_vulnerabilite_climatique.ipynb" target="_blank"><b>Voir le notebook</b></a>
+    </p>
   </section>
+
+  <!-- Projet 4 -->
+  <section>
+    <h3>Analyse des déterminants du prix du vin | Économétrie & Data Analysis</h3>
+
+    <p>
+      <b>Contexte :</b> étude d’une base de données de vins afin d’identifier les facteurs expliquant les écarts de prix observés entre différents produits.
+    </p>
+
+    <p>
+      <b>Méthodologie :</b> nettoyage de données, création de variables explicatives, transformation de variables, régressions linéaires, variables indicatrices, tests d’hétéroscédasticité et analyse des résidus.
+    </p>
+
+    <p>
+      <b>Outils :</b> R, Gretl, économétrie, régression linéaire, tests statistiques, estimation robuste, nettoyage de données.
+    </p>
+
+    <p>
+      <b>Apport du projet :</b> identification des variables influençant le prix du vin, notamment la notation, l’âge, le pays d’origine et certaines caractéristiques du produit, avec une interprétation économique des résultats.
+    </p>
+
+    <p>
+      <a href="Projet/Analyse des déterminants du prix du vin - Économétrie - Data Analysis.pdf" target="_blank"><b>Voir le livrable</b></a>
+    </p>
+  </section>
+
+  <!-- Projet 5 -->
+  <section>
+    <h3>Modélisation du risque climatique et des primes d’assurance | R / GLM</h3>
+
+    <p>
+      <b>Contexte :</b> projet appliqué à l’analyse de l’augmentation des primes d’assurance dans un contexte de risques climatiques croissants et d’incertitude économique.
+    </p>
+
+    <p>
+      <b>Méthodologie :</b> traitement de données, construction de variables explicatives, modélisation par GLM, comparaison de modèles, tests statistiques, analyse des résidus et interprétation des résultats.
+    </p>
+
+    <p>
+      <b>Outils :</b> R, GLM, économétrie appliquée, modélisation statistique, analyse de sinistralité, validation de modèles.
+    </p>
+
+    <p>
+      <b>Apport du projet :</b> compréhension des facteurs liés à l’évolution des primes d’assurance et mise en relation entre modélisation statistique, sinistralité climatique et problématique métier assurantielle.
+    </p>
+
+    <p>
+      <a href="Projet/Modélisation du risque climatique  primes d’assurance - R - GLM.pdf" target="_blank"><b>Voir le livrable</b></a>
+    </p>
+  </section>
+
 </article>
 
 <!-- Compétences -->
