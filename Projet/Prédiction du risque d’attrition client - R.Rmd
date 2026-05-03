@@ -1,0 +1,344 @@
+---
+title: "Projet Big Data"
+output: html_document
+date: "2026-04-30"
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+# Contexte et présentation du projet
+
+## Présentation de la base de données
+
+Ce projet s'inscrit dans le cadre d'une analyse prédictive appliquée au secteur bancaire. La base de données utilisée est issue d'une banque et contient une observation par client. 
+
+Elle regroupe un ensemble de variables décrivant le profil et le comportement de chaque client, notamment : un commentaire de satisfaction client, les revenus, le nombre de crédits contractés, le nombre de retraits effectués, le risque de défaut, le type de produit souscrit ainsi que le nombre de conseils reçus en agence.
+
+## Objectif
+
+L'objectif principal de ce projet est de prédire le risque d'attrition, c'est-à-dire la probabilité qu'un client résilie sa relation avec la banque.
+
+En effet, certains comportements ou caractéristiques peuvent être des signaux avant-coureurs d'un départ : un client fréquemment à découvert, peu engagé avec ses produits bancaires ou exprimant une insatisfaction dans ses commentaires sera potentiellement plus susceptible de quitter la banque.
+
+Anticiper ces départs permet à l'établissement bancaire de mettre en place des actions de fidélisation ciblées.
+
+## Préparation de la variable cible
+
+La base de données contenant un commentaire textuel de satisfaction client, il était nécessaire de transformer cette variable qualitative en une variable numérique exploitable par les modèles statistiques.
+
+Pour ce faire, nous avons réalisé une analyse de sentiments sous Python à l'aide d'une banque de mots positifs et négatifs, chaque mot étant associé à un score. Une fois le traitement appliqué, chaque commentaire client est converti en un score numérique compris entre -1 et 1, où -1 représente un sentiment très négatif et 1 un sentiment très positif. Cette nouvelle variable a été nommée *ssatscore*.
+
+Dans un second temps, afin de construire notre variable cible, nous avons binarisé le *ssatscore* par arrondi afin d'obtenir la variable *Rq_attrition*, ne prenant que deux valeurs : 0 (pas d'attrition) et 1 (attrition).
+
+Cette variable binaire constitue la variable à expliquer dans l'ensemble des modèles développés dans ce projet.
+
+## Modèle Naïve Bayes — Prédiction du risque d'attrition
+
+Afin de prédire le risque d'attrition des clients, nous avons mis en place un modèle de classification Naïve Bayes à l'aide du package *e1071* sous R.
+
+### Préparation des données
+
+Avant de construire le modèle, la base de données a été préparée en deux étapes. La variable *Etudes* a d'abord été convertie au format numérique.
+
+Ensuite, la base de données a été mélangée aléatoirement afin d'éviter tout biais de sélection. Elle a ensuite été divisée en deux sous-ensembles : une base d'entraînement représentant 80% des observations, utilisée pour construire le modèle, et une base de test représentant les 20% restants, utilisée pour évaluer ses performances.
+
+### Construction du modèle
+
+Le modèle Naïve Bayes a été entraîné sur la base d'apprentissage en utilisant huit variables explicatives : les revenus, le nombre de crédits, le nombre de retraits, le type de produit, le solde des 30 derniers jours, le sexe, la possession d'un Livret A et l'âge.
+
+Un paramètre de Laplace égal à 1 a été appliqué afin d'éviter les probabilités nulles. Le modèle est particulièrement adapté à notre problématique car la variable cible *Rq_attrition* est une variable discrète binaire (0 = pas d'attrition, 1 = attrition), ce pour quoi Naïve Bayes a été conçu.
+
+### Résultats du modèle
+
+Les probabilités a priori indiquent que 51.9% des clients de la base d'entraînement ne sont pas en attrition contre 48.1% qui le sont.
+
+L'analyse des probabilités conditionnelles révèle plusieurs facteurs discriminants : les clients en attrition présentent des revenus nettement plus faibles (1 016€ en moyenne contre 3 894€), un solde moyen négatif sur les 30 derniers jours (-91€ contre +238€), moins de crédits contractés (0.26 contre 0.98 en moyenne) et sont en majorité non détenteurs d'un Livret A (82%). 
+
+Ils effectuent également davantage de retraits en moyenne (12.23 contre 9.40), sont plus jeunes (31.7 ans contre 41.4 ans) et détiennent majoritairement une Carte Gold (85%).
+
+### Évaluation des performances
+
+L'application du modèle sur la base de test de 21 observations donne les résultats suivants :
+
+- 13 vrais négatifs (clients non en attrition correctement identifiés)
+- 4 vrais positifs (clients en attrition correctement identifiés)
+- 1 faux négatif et 3 faux positifs
+
+Le modèle obtient un recall de 0.8125, une précision de 0.9286 et un F-measure de 0.8667, soit respectivement 81.3%, 92.9% et 86.7%.
+
+Le recall indique que le modèle identifie une grande majorité des clients en attrition, bien qu'une partie d'entre eux ne soit pas détectée. La précision élevée montre que la plupart des clients prédits comme en attrition le sont effectivement, ce qui traduit une bonne fiabilité des prédictions positives.
+
+Ces performances restent globalement satisfaisantes et constituent une base de comparaison pertinente pour les modèles suivants, bien que le modèle présente un léger compromis entre détection des clients en attrition et précision des prédictions.
+
+### Code pour Naïve Bayes
+
+```{r, eval=FALSE}
+T = read.table(file.choose(), header=TRUE, sep=";") # notre base de données
+T
+
+T$Etudes <- as.numeric(gsub(",", ".", as.character(T$Etudes)))
+
+# Création base test
+n = nrow(T)
+T = T[sample(n),]
+
+# Train/test
+n_train = floor(n*80/100)
+n_test = n - n_train
+
+library(e1071)
+
+model_train = naiveBayes(T[1:n_train,1] ~ ., T[1:n_train,2:11], laplace = 1)
+model_train
+
+n_train = n_train + 1
+prevision = predict(model_train, T[n_train:n,2:11])
+prevision
+T[n_train:n,1]
+
+# Matrice de confusion
+MC = table(T[n_train:n,1], prevision)
+MC
+
+# Métriques
+recall = MC[1,1] / (MC[1,1] + MC[1,2])
+precision = MC[1,1] / (MC[1,1] + MC[2,1])
+F_measure = 2 * recall * precision / (precision + recall)
+
+recall
+precision
+F_measure
+
+n_train = n_train - 1
+```
+### Construction du modèle GLM Probit complet
+
+Dans un premier temps, un modèle GLM avec lien probit a été construit en intégrant l'ensemble des variables disponibles : les revenus, le nombre de crédits, le nombre de retraits, le type de produit, le nombre de conseils en agence, le nombre de conseils en ligne, le solde des 30 derniers jours, le sexe, la possession d'un Livret A, l'âge, le niveau d'études et la satisfaction client.
+
+Ce modèle présente une déviance résiduelle de 22.25 contre une déviance nulle de 139.47, ce qui traduit une très bonne capacité explicative. L'AIC initial est de 52.25.
+
+Le pseudo-$R^2$ de McFadden obtenu via le package *pscl* est de 0.84, ce qui est excellent, un modèle étant généralement considéré comme très bon au-delà de 0.4.
+
+L'analyse des *p-values* révèle que seules trois variables apparaissent statistiquement significatives : les revenus ($p = 0.0359$), le nombre de conseils en agence ($p = 0.0782$) et la possession d'un Livret A ($p = 0.0626$).
+
+Les autres variables ne présentent pas de significativité statistique individuelle au seuil retenu, ce qui justifie l'application d'une procédure de sélection de variables.
+
+### Code pour le modèle GLM Probit et sélection Stepwise
+
+```{r, eval=FALSE}
+T = read.table(file.choose(), header=TRUE, sep=";") # notre base de données
+T$Etudes <- as.numeric(gsub(",", ".", as.character(T$Etudes)))
+
+# Modèle probit complet
+fit <- glm(Rq_attrition ~ Revenus + Nbre_Credits + nbre_retraits + Type_produit +
+           nbre_conseils_agence + nbre_conseils_enligne + Solde_30 +
+           Sexe + Livret_A + Age + Etudes + sat,
+           family = binomial(link ="probit"), data = T)
+
+fit
+fitted(fit)
+summary(fit)
+
+plot(fit$effects)
+
+library(pscl)
+pR2(fit)
+
+# STEPWISE
+model2 = step(fit)
+model2
+
+exp(coef(model2)) # Odds ratios
+
+# Création base test
+n = nrow(T)
+alea = T[sample(1:n, n),] # mélange
+partition = sample(2, nrow(alea), replace=TRUE, prob=c(0.8,0.2))
+
+# train/test
+T_train = alea[partition==1,]
+T_test = alea[partition==2,]
+
+# Modèle réduit
+fit2 <- glm(Rq_attrition ~ Revenus + nbre_conseils_agence + Livret_A + Age + Etudes + sat,
+            family = binomial(link ="probit"), data = T_train)
+
+# Prévision
+pred = predict(fit2, newdata=T_test)
+pred
+
+pred_bin = as.numeric(pred > 0.5)
+pred_bin
+
+table(Reference = T_test$Rq_attrition, Predicted = pred_bin)
+```
+
+### Sélection des variables par Stepwise
+
+La fonction `step()` a été appliquée sur le modèle complet avec une direction bidirectionnelle (*both*), permettant à l'algorithme d'ajouter ou de retirer des variables à chaque étape selon le critère AIC.
+
+En plusieurs étapes successives, l'algorithme a éliminé progressivement les variables suivantes : *Type_produit*, *sat*, *nbre_retraits*, *Solde_30*, *Sexe*, *nbre_conseils_enligne* et *Nbre_Credits*.
+
+Le modèle final retenu est le suivant :
+
+$$
+Rq\_attrition \sim Revenus + nbre\_conseils\_agence + Livret\_A + Age + Etudes
+$$
+
+L'AIC final est de 38.45, soit une réduction significative par rapport à l'AIC initial de 52.25, confirmant que ce modèle est plus parcimonieux et mieux ajusté.
+
+### Interprétation des Odds Ratio
+
+Les odds ratio ont été calculés en appliquant la fonction exponentielle aux coefficients du modèle retenu.
+
+La variable *Revenus* présente un odds ratio de 0.999 : des revenus plus élevés réduisent très légèrement le risque d'attrition. La variable *nbre_conseils_agence* présente un odds ratio de 0.505 : chaque conseil supplémentaire en agence divise le risque d'attrition par 2. La variable *Livret_A* présente un odds ratio de 0.110 : posséder un Livret A réduit massivement le risque d'attrition, celui-ci étant divisé par près de 9. La variable *Age* présente un odds ratio de 0.954 : les clients plus âgés ont un risque légèrement plus faible de quitter la banque. Enfin, la variable *Etudes* présente un odds ratio de 1.276 : un niveau d'études plus élevé est associé à un risque légèrement plus élevé d'attrition.
+
+Toutes les variables retenues présentent un odds ratio inférieur à 1, à l'exception du niveau d'études, ce qui signifie qu'elles contribuent globalement à réduire le risque d'attrition. Le *Livret_A* est de loin la variable la plus protectrice, ce qui s'explique économiquement : un client détenteur d'un Livret A est davantage engagé avec sa banque et donc moins susceptible de la quitter.
+
+### Validation du modèle
+
+Appliqué sur la base de test, représentant 20% des observations, le modèle prédit correctement 16 observations sur 19.
+
+La matrice de confusion met en évidence les résultats suivants :
+
+- 7 vrais négatifs (clients non en attrition correctement identifiés)
+- 9 vrais positifs (clients en attrition correctement identifiés)
+- 1 faux positif
+- 2 faux négatifs
+
+Le modèle présente donc une bonne capacité de classification, bien qu'il commette certaines erreurs. Les faux négatifs indiquent que certains clients en attrition ne sont pas détectés, ce qui constitue un enjeu important dans une optique de fidélisation. Les faux positifs traduisent quant à eux une surestimation du risque pour certains clients fidèles.
+
+Comme évoqué précédemment, ces résultats sont à interpréter avec prudence compte tenu de la taille réduite de la base de test.
+
+## Modèle LDA — Analyse Discriminante Linéaire
+
+### Présentation du modèle
+
+En complément des modèles précédents, nous avons mis en place une Analyse Discriminante Linéaire (LDA) à l'aide du package *MASS* sous R. Le LDA est une méthode de classification supervisée dont l'objectif est de trouver la combinaison linéaire de variables explicatives qui sépare le mieux les deux groupes de clients : ceux en attrition (1) et ceux qui restent fidèles (0).
+
+Contrairement au Naïve Bayes qui suppose l'indépendance des variables, le LDA suppose que les variables suivent une loi normale au sein de chaque groupe et que les matrices de variance-covariance sont identiques entre les groupes. Il s'agit d'une hypothèse plus forte, mais qui permet une séparation plus précise lorsqu'elle est vérifiée.
+
+Dans notre projet, le LDA est utilisé en complément des modèles GLM et Naïve Bayes afin de comparer les performances prédictives de différentes approches et de retenir le modèle le plus adapté à la prédiction du risque d’attrition.
+
+### Démarche
+
+Dans un premier temps, le modèle est construit sur l'ensemble de la base afin d'analyser le pouvoir discriminant de chaque variable via les moyennes par groupe (`fit$means`) et le score discriminant (`fit$svd`).
+
+Dans un second temps, la base est divisée en une base d'entraînement (80%) et une base de test (20%) selon la même procédure que pour les modèles précédents. Le modèle est ensuite réentraîné sur les 80% puis appliqué sur les 20% restants pour évaluer ses performances prédictives.
+
+### Code pour le modèle LDA
+
+```{r, eval=FALSE}
+library(MASS)
+
+data = read.table(file.choose(), header=TRUE, sep=";")
+
+data$Etudes <- as.numeric(as.character(data$Etudes))
+
+# Modèle LDA complet
+fit = lda(Rq_attrition ~ Revenus + Nbre_Credits + nbre_retraits + 
+          Type_produit + Sexe + Livret_A + Age + Etudes, data=data)
+
+fit$means
+
+plot(fit)
+
+prev0 = predict(object = fit, newdata = data)
+
+prev0$x
+
+fit$svd
+
+fit$svd^2 / sum(fit$svd^2)
+
+# Split 80/20
+set.seed(123)
+n = nrow(data)
+data = data[sample(n),]
+
+n_train = floor(n*80/100)
+
+train = data[1:n_train, ]
+test = data[(n_train+1):n, ]
+
+# Modèle LDA sur la base d'entraînement
+fit2 = lda(Rq_attrition ~ Revenus + Nbre_Credits + nbre_retraits + 
+           Type_produit + Sexe + Livret_A + Age + Etudes, data=train)
+
+# Prédiction sur la base de test
+prev = predict(object = fit2, newdata = test)
+
+prev$class        # classes prédites
+prev$posterior    # probabilités a posteriori
+prev$x            # scores discriminants
+
+# Matrice de confusion
+MC = table(test$Rq_attrition, prev$class)
+MC
+
+# Métriques
+recall = MC[1,1] / (MC[1,1] + MC[1,2])
+precision = MC[1,1] / (MC[1,1] + MC[2,1])
+F_measure = 2 * recall * precision / (precision + recall)
+
+recall
+precision
+F_measure
+```
+
+### Interprétation des résultats du modèle
+
+#### Interprétation des résultats LDA
+
+##### Moyennes par groupe (*fit$means*)
+
+Les moyennes confirment les résultats des modèles précédents. Les clients en attrition (1) ont des revenus nettement plus faibles (1 075€ contre 3 958€), effectuent plus de retraits (12.23 contre 9.21 en moyenne), sont très peu détenteurs d'un Livret A (21% contre 95%) et sont plus jeunes (31.5 ans contre 41.7 ans). Ces écarts importants entre les deux groupes valident la capacité discriminante du modèle.
+
+##### Pouvoir discriminant
+
+La quantité $\frac{fit\$svd^2}{\sum fit\$svd^2} = 1$ signifie que l'unique axe discriminant créé par le LDA explique 100% de la variance entre les groupes. Cela est cohérent dans le cadre d'une classification binaire, qui ne génère qu'un seul axe discriminant par construction.
+
+##### Valeurs manquantes
+
+Les observations 51 et 86 affichent des valeurs manquantes (*NA*) dans les scores discriminants et les prédictions. Cela est dû aux valeurs manquantes dans la variable *Etudes*, introduites lors de la conversion numérique. Ces observations n'ont donc pas pu être classées.
+
+##### Matrice de confusion
+
+- 14 vrais négatifs et 6 vrais positifs  
+- 1 faux négatif : un client en attrition prédit comme fidèle  
+- 0 faux positif  
+
+##### Métriques
+
+- Recall = 1 → le modèle identifie parfaitement tous les clients non en attrition  
+- Précision = 0.933 → 93.3% des clients prédits comme fidèles le sont réellement
+- F measure = 0.966 → très bonne performance globale 
+
+
+## Conclusion et recommandations
+
+### Synthèse des résultats
+
+L'ensemble des modèles mis en place dans ce projet — Naïve Bayes, GLM Probit, Stepwise et LDA — converge vers des conclusions similaires. Les variables les plus déterminantes dans la prédiction du risque d'attrition sont les revenus, la possession d'un Livret A, l'âge et le nombre de retraits, confirmées par le LDA, auxquelles s'ajoutent le nombre de conseils reçus en agence et le niveau d'études, identifiées par le Stepwise.
+
+Cette convergence entre des modèles de nature différente renforce la robustesse des résultats et la fiabilité des recommandations. En termes de performances prédictives, le LDA obtient le meilleur *F-measure* avec une valeur proche de 0.97, suivi du Naïve Bayes avec un *F-measure* d’environ 0.87, tandis que le GLM Probit présente des performances satisfaisantes bien qu’imparfaites sur sa base de test. Ces résultats constituent une base solide pour formuler des recommandations concrètes à destination de la direction de la banque.
+
+### Recommandations sur la relation client
+
+Les résultats montrent que le nombre de conseils reçus en agence est l'un des facteurs les plus protecteurs contre l'attrition : chaque interaction supplémentaire avec un conseiller divise le risque de départ par deux. La banque devrait donc renforcer le suivi personnalisé de ses clients, notamment en augmentant la fréquence des prises de contact proactives pour les profils à risque identifiés par les modèles.
+
+Par ailleurs, les clients jeunes et à faibles revenus apparaissent comme les plus susceptibles de quitter la banque, un constat cohérent avec l'ensemble des modèles. Il serait pertinent de développer des offres spécifiquement adaptées à ce segment, avec des frais réduits, des produits accessibles et une relation client digitale renforcée.
+
+L'analyse de sentiments réalisée sur les commentaires clients révèle que les principales sources d'insatisfaction portent sur les frais bancaires jugés excessifs, la qualité du service client et le manque d'innovation dans les produits proposés. La banque devrait engager une révision de sa politique tarifaire et investir dans la modernisation de ses outils digitaux afin d'améliorer l'expérience client globale.
+
+Enfin, la possession d'un Livret A s'avère être le facteur le plus fortement associé à la fidélité client, identifié comme variable clé aussi bien par le Stepwise que par le LDA. Cela suggère qu'un client multi-produits est un client fidèle. La banque aurait donc tout intérêt à encourager la souscription à plusieurs produits dès l'entrée en relation, par exemple en proposant l'ouverture d'un Livret A systématiquement lors de l'ouverture d'un compte courant.
+
+### Recommandations sur les crédits immobiliers
+
+Les résultats montrent que les clients en attrition contractent en moyenne significativement moins de crédits que les clients fidèles (0.26 contre 0.98 en moyenne). Le crédit immobilier, en tant que produit d'engagement fort et de longue durée, représente un levier majeur de fidélisation. La banque devrait donc faciliter l'accès au crédit immobilier pour les clients à risque d'attrition, notamment les jeunes clients à revenus modestes identifiés par le LDA, en proposant des conditions avantageuses et un accompagnement personnalisé tout au long du processus.
+
+Par ailleurs, un client titulaire d'un crédit immobilier est par nature lié à sa banque sur le long terme, ce qui réduit mécaniquement le risque d'attrition. Il serait donc stratégique de développer des offres de crédit immobilier attractives et compétitives, en particulier pour les primo-accédants, afin de capter ce segment de clientèle jeune et de le fidéliser durablement.
+
+Enfin, les clients présentant un solde négatif sur les 30 derniers jours sont davantage représentés parmi les clients en attrition. La banque pourrait envisager de proposer des solutions de restructuration financière à ces clients fragilisés, comme des prêts personnels à taux préférentiels ou des facilités de caisse encadrées, plutôt que de les laisser accumuler des difficultés qui les pousseront à chercher une alternative ailleurs.
